@@ -1,0 +1,7 @@
+# no need to push actual data to repository(mysql tables, sphinx indexies)
+# but we need to have this dir in repo, that is why readme.md is here
+*/data/*
+!*/data/readme.md
+
+*/log/*
+!*/log/readme.md
