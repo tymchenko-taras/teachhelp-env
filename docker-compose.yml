@@ -1,0 +1,63 @@
+version: '2.1'
+
+services:
+ container-python:
+    build:
+        context: ./python
+        dockerfile: Dockerfile
+    volumes:
+        - ../src/py1:/src/py1
+        - ./python/data:/var/lib/python
+    tty: true
+
+ container-php:
+    build:
+        context: ./php
+        dockerfile: Dockerfile
+    ports:
+        - 9001:9000
+    volumes:
+        - ../src/teachhelp:/src/teachhelp
+        - ./php/config:/usr/local/etc/php
+
+ container-nginx:
+    build:
+        context: ./nginx
+        dockerfile: Dockerfile
+    ports:
+        - 8001:80
+    volumes:
+        - ../src/teachhelp:/src/teachhelp
+        - ./nginx/config:/etc/nginx
+        - ./nginx/log:/var/log/nginx
+
+ container-sphinx:
+    build:
+        context: ./sphinx
+        dockerfile: Dockerfile
+    volumes:
+        - ./sphinx/config:/usr/local/etc
+        - ./sphinx/data:/usr/local/var/data
+        - ./sphinx/log:/var/log/sphinx
+    depends_on:
+        container-mysql:
+            condition: service_healthy
+
+ container-mysql:
+    build:
+        context: ./mysql
+        dockerfile: Dockerfile
+    volumes:
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/config:/etc/mysql
+    ports:
+        - 4406:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: teachhelp
+        MYSQL_USER: dev
+        MYSQL_PASSWORD: dev
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-proot"]
+        timeout: 1s
+        retries: 1
