@@ -5,8 +5,11 @@ services:
     build:
         context: ./python
         dockerfile: Dockerfile
+    ports:
+          - 8003:8000
     volumes:
         - ../src/py1:/src/py1
+        - ../src/django:/src/django
         - ./python/data:/var/lib/python
     tty: true
 
