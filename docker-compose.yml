@@ -5,13 +5,16 @@ services:
     build:
         context: ./python
         dockerfile: Dockerfile
+    command: bash -c "sleep 1 && service ssh start && python3"
     ports:
-          - 8003:8000
+        - "8003:8000"
+        - "2200:22"
     volumes:
         - ../src/py1:/src/py1
         - ../src/django:/src/django
         - ./python/data:/var/lib/python
-    tty: true
+        - ./python/log:/var/log/python
+    tty: true # supervisord -n is using instead
 
  container-php:
     build:
@@ -52,6 +55,7 @@ services:
         dockerfile: Dockerfile
     volumes:
         - ./mysql/data:/var/lib/mysql
+        - ./mysql/log:/var/log/mysql
         - ./mysql/config:/etc/mysql
     ports:
         - 4406:3306
