@@ -1,8 +1,0 @@
-mysqlclient
-django==1.11
-nltk
-numpy
-scikit-learn
-sphinxapi-py3
-pip-tools
-pandas

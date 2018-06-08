@@ -21,7 +21,7 @@ services:
         context: ./php
         dockerfile: Dockerfile
     ports:
-        - 9001:9000
+        - "9001:9000"
     volumes:
         - ../src/teachhelp:/src/teachhelp
         - ./php/config:/usr/local/etc/php
@@ -31,7 +31,7 @@ services:
         context: ./nginx
         dockerfile: Dockerfile
     ports:
-        - 8001:80
+        - "8001:80"
     volumes:
         - ../src/teachhelp:/src/teachhelp
         - ./nginx/config:/etc/nginx
@@ -58,7 +58,7 @@ services:
         - ./mysql/log:/var/log/mysql
         - ./mysql/config:/etc/mysql
     ports:
-        - 4406:3306
+        - "4406:3306"
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: teachhelp
