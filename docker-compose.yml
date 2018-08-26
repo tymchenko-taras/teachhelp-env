@@ -14,7 +14,7 @@ services:
         - ../src/django:/src/django
         - ./python/data:/var/lib/python
         - ./python/log:/var/log/python
-    tty: true # supervisord -n is using instead
+    tty: true #supervisord -n is using instead
 
  container-php:
     build:
